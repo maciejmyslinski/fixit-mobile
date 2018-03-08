@@ -14,14 +14,15 @@ import {
   FlatList
 } from "react-native";
 import { StackNavigator } from "react-navigation";
+import firebase from "react-native-firebase";
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
-
+firebase
+  .auth()
+  .signInAnonymously()
+  .then(user => {
+    console.log(user);
+  });
+  
 class TaskDetails extends Component {
   render() {
     return <Text>Hello</Text>;
@@ -32,7 +33,7 @@ class TasksList extends Component {
   render() {
     return (
       <FlatList
-        data={Array.from(new Array(20)).map((item, i) => ({ key: i + 1 }))}
+        data={Array.from(new Array(20)).map((item, i) => ({ key: String(i + 1) }))}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("TaskDetails")}
