@@ -17,12 +17,13 @@ import { StackNavigator } from "react-navigation";
 import firebase from "react-native-firebase";
 
 firebase
-  .auth()
-  .signInAnonymously()
-  .then(user => {
-    console.log(user);
-  });
-  
+  .firestore()
+  .collection("jobs")
+  .get()
+  .then(querySnapshot =>
+    querySnapshot.forEach(job => console.log(job.id, job.data()))
+  );
+
 class TaskDetails extends Component {
   render() {
     return <Text>Hello</Text>;
@@ -33,7 +34,9 @@ class TasksList extends Component {
   render() {
     return (
       <FlatList
-        data={Array.from(new Array(20)).map((item, i) => ({ key: String(i + 1) }))}
+        data={Array.from(new Array(20)).map((item, i) => ({
+          key: String(i + 1)
+        }))}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("TaskDetails")}
