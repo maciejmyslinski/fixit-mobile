@@ -1,63 +1,53 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  Text,
-  View,
-  FlatList
-} from "react-native";
-import { StackNavigator } from "react-navigation";
-import firebase from "react-native-firebase";
+  Container,
+  Header,
+  Body,
+  Title,
+  Content,
+  ListItem,
+  Text
+} from 'native-base';
+import { StackNavigator } from 'react-navigation';
+import firebase from 'react-native-firebase';
 
-firebase
-  .firestore()
-  .collection("jobs")
-  .get()
-  .then(querySnapshot =>
-    querySnapshot.forEach(job => console.log(job.id, job.data()))
-  );
+class App extends Component {
+  state = {};
 
-class TaskDetails extends Component {
-  render() {
-    return <Text>Hello</Text>;
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection('jobs')
+      .get()
+      .then(querySnapshot =>
+        this.setState({
+          jobs: querySnapshot.docs.map(queryDocumentSnapshot => ({
+            id: queryDocumentSnapshot.id,
+            ...queryDocumentSnapshot.data()
+          }))
+        })
+      );
   }
-}
 
-class TasksList extends Component {
   render() {
     return (
-      <FlatList
-        data={Array.from(new Array(20)).map((item, i) => ({
-          key: String(i + 1)
-        }))}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate("TaskDetails")}
-          >
-            <Text style={styles.welcome}>Zlecenie nr. {item.key}</Text>
-          </TouchableOpacity>
-        )}
-      />
+      <Container>
+        <Header>
+          <Body>
+            <Title>Lista zleceń</Title>
+          </Body>
+        </Header>
+        <Content>
+          {this.state.jobs &&
+            this.state.jobs.map(job => (
+              <ListItem key={job.id}>
+                <Text>Zlecenie numer {job.number}</Text>
+              </ListItem>
+            ))}
+        </Content>
+      </Container>
     );
   }
 }
 
-export default StackNavigator({
-  Home: { screen: TasksList },
-  TaskDetails: { screen: TaskDetails }
-});
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  }
-});
+export default App;
