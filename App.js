@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Container,
   Header,
@@ -7,17 +7,19 @@ import {
   Content,
   ListItem,
   Text
-} from 'native-base';
-import { StackNavigator } from 'react-navigation';
-import firebase from 'react-native-firebase';
+} from "native-base";
+import { StackNavigator } from "react-navigation";
+import firebase from "react-native-firebase";
 
 class App extends Component {
-  state = {};
-
+  state = {
+    jobs: [],
+  }
+  
   componentDidMount() {
     firebase
       .firestore()
-      .collection('jobs')
+      .collection("jobs")
       .get()
       .then(querySnapshot =>
         this.setState({
@@ -27,6 +29,21 @@ class App extends Component {
           }))
         })
       );
+    this.unsubscribe = firebase
+      .firestore()
+      .collection("jobs")
+      .onSnapshot(documentSnapshot =>
+        this.setState({
+          jobs: documentSnapshot.docs.map(queryDocumentSnapshot => ({
+            id: queryDocumentSnapshot.id,
+            ...queryDocumentSnapshot.data()
+          }))
+        })
+      );
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
   }
 
   render() {
