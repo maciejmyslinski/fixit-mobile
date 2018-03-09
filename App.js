@@ -20,6 +20,7 @@ class App extends Component {
     firebase
       .firestore()
       .collection("jobs")
+      .orderBy('number')
       .get()
       .then(querySnapshot =>
         this.setState({
@@ -32,6 +33,7 @@ class App extends Component {
     this.unsubscribe = firebase
       .firestore()
       .collection("jobs")
+      .orderBy('number')
       .onSnapshot(documentSnapshot =>
         this.setState({
           jobs: documentSnapshot.docs.map(queryDocumentSnapshot => ({
