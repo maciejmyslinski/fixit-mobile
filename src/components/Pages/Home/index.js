@@ -12,14 +12,14 @@ import {
 
 export const Home = ({
   navigation,
-  screenProps: { loading, jobs }
+  screenProps: { loading, data }
 }) => {
   if (loading) return <Spinner />;
   return (
     <Container>
       <Content>
-        {jobs &&
-          jobs.map(job => (
+        {data &&
+          data.map(job => (
             <ListItem
               key={job.id}
               onPress={() => navigation.navigate('JobDetails', { number: job.number })}

@@ -3,7 +3,7 @@ import firebase from 'react-native-firebase';
 
 export class JobsProvider extends Component {
   state = {
-    jobs: [],
+    data: [],
     loading: true,
     error: false
   };
@@ -12,7 +12,7 @@ export class JobsProvider extends Component {
     this.setState({
       loading: false,
       error: false,
-      jobs: querySnapshot.docs.map(queryDocumentSnapshot => ({
+      data: querySnapshot.docs.map(queryDocumentSnapshot => ({
         id: queryDocumentSnapshot.id,
         ...queryDocumentSnapshot.data()
       }))

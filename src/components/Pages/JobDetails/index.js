@@ -15,14 +15,14 @@ import {
 
 export const JobDetails = ({
   navigation: { navigate, state: { params: { number } } },
-  screenProps: { loading, jobs }
+  screenProps: { loading, data }
 }) => {
   if (loading) return <Spinner />;
   return (
     <Container>
       <Content padder>
         <Text>Zlecenie numer {number}</Text>
-        <Text>{jobs.find(job => job.number === number).description}</Text>
+        <Text>{data.find(job => job.number === number).description}</Text>
       </Content>
     </Container>
   );
