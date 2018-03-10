@@ -33,7 +33,7 @@ export class JobDetails extends Component {
     }).isRequired,
     screenProps: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      data: PropTypes.object.isRequired
+      querySnapshot: PropTypes.object
     }).isRequired
   };
 
@@ -59,7 +59,7 @@ export class JobDetails extends Component {
             <Input
               defaultValue={job.data().report}
               placeholder="Twój raport ze zlecenia"
-              onChangeText={debounce(this.handleChangeText, 2000, {
+              onChangeText={debounce(this.handleChangeText, 500, {
                 maxWait: 6000
               })}
             />

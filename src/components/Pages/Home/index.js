@@ -49,6 +49,6 @@ Home.propTypes = {
   }).isRequired,
   screenProps: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
-    querySnapshot: PropTypes.object.isRequired
+    querySnapshot: PropTypes.object
   }).isRequired
 };
