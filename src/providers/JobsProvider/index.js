@@ -33,7 +33,7 @@ export class JobsProvider extends Component {
       .firestore()
       .collection('jobs')
       .orderBy('number')
-      .onSnapshot(this.handleJobSnapshot)
+      .onSnapshot(this.handleJobSnapshot, this.handleError);
   }
 
   componentWillUnmount() {
