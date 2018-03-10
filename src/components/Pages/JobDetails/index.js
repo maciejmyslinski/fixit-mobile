@@ -52,13 +52,14 @@ export class JobDetails extends Component {
     return (
       <Container>
         <Content padder>
-          <Text>Zlecenie numer {job.data().number}</Text>
+          <Text>Opis zlecenia:</Text>
           <Text>{job.data().description}</Text>
           <Text>Raport:</Text>
           <Item regular>
             <Input
               defaultValue={job.data().report}
               placeholder="Twój raport ze zlecenia"
+              multiline={true}
               onChangeText={debounce(this.handleChangeText, 500, {
                 maxWait: 6000
               })}
