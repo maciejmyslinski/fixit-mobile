@@ -15,9 +15,28 @@ import {
   Input
 } from 'native-base';
 import firebase from 'react-native-firebase';
+import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 
 export class JobDetails extends Component {
+  static propTypes = {
+    navigation: PropTypes.shape({
+      state: PropTypes.shape({
+        params: PropTypes.shape({
+          job: PropTypes.shape({
+            ref: PropTypes.shape({
+              update: PropTypes.func.isRequired
+            }).isRequired
+          }).isRequired
+        }).isRequired
+      }).isRequired
+    }).isRequired,
+    screenProps: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      data: PropTypes.object.isRequired
+    }).isRequired
+  };
+
   handleChangeText = text =>
     this.props.navigation.state.params.job.ref.update({
       report: text

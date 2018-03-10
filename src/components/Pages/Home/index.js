@@ -9,6 +9,7 @@ import {
   Text,
   Spinner
 } from 'native-base';
+import PropTypes from 'prop-types';
 
 export const Home = ({
   navigation,
@@ -41,3 +42,13 @@ Home.navigationOptions = ({ navigation }) => ({
     </Header>
   )
 });
+
+Home.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired
+  }).isRequired,
+  screenProps: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    querySnapshot: PropTypes.object.isRequired
+  }).isRequired
+};

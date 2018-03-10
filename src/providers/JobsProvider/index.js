@@ -1,7 +1,12 @@
 import { Component } from 'react';
 import firebase from 'react-native-firebase';
+import PropTypes from 'prop-types';
 
 export class JobsProvider extends Component {
+  static propTypes = {
+    render: PropTypes.func.isRequired
+  };
+
   state = {
     loading: true,
     error: false
