@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "888703078249-2m1n7eqbh4gic889jt4ieemje75pqo7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fixit",
+            "certificate_hash": "d372efcf8d8ce0acb62dc777aae403d463a9aa4e"
+          }
+        },
+        {
+          "client_id": "888703078249-umkvk2mllv3k931aipbnmkep7phoc34d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fixit",
+            "certificate_hash": "b5d74b0dc4d32c19f2f842ce58c47df2e7d9a70d"
+          }
+        },
+        {
           "client_id": "888703078249-o6vsl92t9allofp7okfg8l3epgtpmrmn.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +45,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "888703078249-o6vsl92t9allofp7okfg8l3epgtpmrmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
