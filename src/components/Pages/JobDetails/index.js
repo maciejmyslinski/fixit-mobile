@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Container,
   Header,
@@ -10,27 +10,50 @@ import {
   Spinner,
   Left,
   Button,
-  Icon
+  Icon,
+  Item,
+  Input
 } from 'native-base';
+import firebase from 'react-native-firebase';
+import debounce from 'lodash/debounce';
 
-export const JobDetails = ({
-  navigation: { navigate, state: { params: { number } } },
-  screenProps: { loading, data }
-}) => {
-  if (loading) return <Spinner />;
-  return (
-    <Container>
-      <Content padder>
-        <Text>Zlecenie numer {number}</Text>
-        <Text>{data.find(job => job.number === number).description}</Text>
-      </Content>
-    </Container>
-  );
-};
+export class JobDetails extends Component {
+  handleChangeText = text =>
+    this.props.navigation.state.params.job.ref.update({
+      report: text
+    });
+
+  render() {
+    const {
+      navigation: { navigate, state: { params: { job } } },
+      screenProps: { loading, data }
+    } = this.props;
+
+    if (loading) return <Spinner />;
+    return (
+      <Container>
+        <Content padder>
+          <Text>Zlecenie numer {job.data().number}</Text>
+          <Text>{job.data().description}</Text>
+          <Text>Raport:</Text>
+          <Item regular>
+            <Input
+              defaultValue={job.data().report}
+              placeholder="Twój raport ze zlecenia"
+              onChangeText={debounce(this.handleChangeText, 2000, {
+                maxWait: 6000
+              })}
+            />
+          </Item>
+        </Content>
+      </Container>
+    );
+  }
+}
 
 JobDetails.navigationOptions = ({
   navigation,
-  navigation: { state: { params: { number } } }
+  navigation: { state: { params: { job } } }
 }) => ({
   header: (
     <Header>
@@ -40,7 +63,7 @@ JobDetails.navigationOptions = ({
         </Button>
       </Left>
       <Body>
-        <Title>Zlecenie {number}</Title>
+        <Title>Zlecenie {job.data().number}</Title>
       </Body>
     </Header>
   )

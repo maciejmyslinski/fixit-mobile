@@ -12,19 +12,19 @@ import {
 
 export const Home = ({
   navigation,
-  screenProps: { loading, data }
+  screenProps: { loading, querySnapshot }
 }) => {
   if (loading) return <Spinner />;
   return (
     <Container>
       <Content>
-        {data &&
-          data.map(job => (
+        {querySnapshot &&
+          querySnapshot.docs.map(job => (
             <ListItem
               key={job.id}
-              onPress={() => navigation.navigate('JobDetails', { number: job.number })}
+              onPress={() => navigation.navigate('JobDetails', { job })}
             >
-              <Text>Zlecenie numer {job.number}</Text>
+              <Text>Zlecenie numer {job.data().number}</Text>
             </ListItem>
           ))}
       </Content>
