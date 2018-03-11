@@ -13,7 +13,7 @@ import PropTypes from 'prop-types';
 
 export const Home = ({
   navigation,
-  screenProps: { loading, querySnapshot }
+  screenProps: { jobs: { loading, querySnapshot } }
 }) => {
   if (loading) return <Spinner />;
   return (
@@ -48,7 +48,9 @@ Home.propTypes = {
     navigate: PropTypes.func.isRequired
   }).isRequired,
   screenProps: PropTypes.shape({
-    loading: PropTypes.bool.isRequired,
-    querySnapshot: PropTypes.object
+    jobs: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      querySnapshot: PropTypes.object
+    }).isRequired
   }).isRequired
 };

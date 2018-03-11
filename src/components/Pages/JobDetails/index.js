@@ -32,8 +32,10 @@ export class JobDetails extends Component {
       }).isRequired
     }).isRequired,
     screenProps: PropTypes.shape({
-      loading: PropTypes.bool.isRequired,
-      querySnapshot: PropTypes.object
+      jobs: PropTypes.shape({
+        loading: PropTypes.bool.isRequired,
+        querySnapshot: PropTypes.object
+      }).isRequired
     }).isRequired
   };
 
@@ -45,7 +47,7 @@ export class JobDetails extends Component {
   render() {
     const {
       navigation: { navigate, state: { params: { job } } },
-      screenProps: { loading, data }
+      screenProps: { jobs: { loading, data } }
     } = this.props;
 
     if (loading) return <Spinner />;

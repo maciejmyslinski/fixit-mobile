@@ -11,11 +11,24 @@ import {
 import { StackNavigator } from 'react-navigation';
 import firebase from 'react-native-firebase';
 import { JobsProvider } from 'src/providers/JobsProvider';
+import { AuthProvider } from 'src/providers/AuthProvider';
 import { Navigator } from 'src/components/Navigator';
 
 class App extends Component {
   render() {
-    return <JobsProvider render={(jobs) => <Navigator screenProps={jobs} />} />;
+    return (
+      <AuthProvider
+        render={auth => {
+          if (auth.UserCredential)
+            return (
+              <JobsProvider
+                render={jobs => <Navigator screenProps={{ jobs, auth }} />}
+              />
+            );
+          return null;
+        }}
+      />
+    );
   }
 }
 
