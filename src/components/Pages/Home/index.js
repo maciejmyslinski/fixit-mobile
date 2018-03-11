@@ -13,8 +13,7 @@ import {
   Button
 } from 'native-base';
 import PropTypes from 'prop-types';
-import firebase from 'react-native-firebase';
-import { GoogleSignin } from 'react-native-google-signin';
+import { logout } from 'src/utils/auth';
 
 export const Home = ({
   navigation,
@@ -45,13 +44,7 @@ Home.navigationOptions = ({ navigation }) => ({
         <Title>Lista zleceń</Title>
       </Body>
       <Right>
-        <Button
-          transparent
-          onPress={() => {
-            firebase.auth().signOut();
-            GoogleSignin.signOut();
-          }}
-        >
+        <Button transparent onPress={logout}>
           <Text style={styles.logoutButton}>Wyloguj</Text>
         </Button>
       </Right>
