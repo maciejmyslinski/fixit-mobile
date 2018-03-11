@@ -28,7 +28,6 @@ class App extends Component {
                 render={jobs => <Navigator screenProps={{ jobs, auth }} />}
               />
             );
-          console.log('I am here');
           return (
             <View style={styles.loginWrapper}>
               <Text>Zaloguj</Text>
