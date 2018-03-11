@@ -5,14 +5,13 @@ import {
   Body,
   Title,
   Content,
-  ListItem,
   Text,
   Spinner,
   Left,
   Button,
   Icon,
   Item,
-  Input
+  Input,
 } from 'native-base';
 import firebase from 'react-native-firebase';
 import PropTypes from 'prop-types';
@@ -25,18 +24,18 @@ export class JobDetails extends Component {
         params: PropTypes.shape({
           job: PropTypes.shape({
             ref: PropTypes.shape({
-              collection: PropTypes.func.isRequired
-            }).isRequired
-          }).isRequired
-        }).isRequired
-      }).isRequired
+              collection: PropTypes.func.isRequired,
+            }).isRequired,
+          }).isRequired,
+        }).isRequired,
+      }).isRequired,
     }).isRequired,
     screenProps: PropTypes.shape({
       jobs: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
-        querySnapshot: PropTypes.object
-      }).isRequired
-    }).isRequired
+        querySnapshot: PropTypes.object,
+      }).isRequired,
+    }).isRequired,
   };
 
   state = { loading: true };
@@ -45,7 +44,7 @@ export class JobDetails extends Component {
     const currentReport = await this.fetchReport();
     this.setState({
       loading: false,
-      initialValue: currentReport ? currentReport.data().content : ''
+      initialValue: currentReport ? currentReport.data().content : '',
     });
   };
 
@@ -59,27 +58,29 @@ export class JobDetails extends Component {
     return !reportsFromCurrentUser.empty && reportsFromCurrentUser.docs[0];
   };
 
-  handleChangeText = async text => {
+  handleChangeText = async (text) => {
     const currentReport = await this.fetchReport();
+    const currentJob = this.props.navigation.state.params.job.ref;
+    const currentUserUid = firebase.auth().currentUser.uid;
 
     if (currentReport) {
       currentJob.collection('reports').add({
         creatorUid: currentUserUid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        content: text
+        content: text,
       });
     } else {
       currentReport.ref.update({
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        content: text
+        content: text,
       });
     }
   };
 
   render() {
     const {
-      navigation: { navigate, state: { params: { job } } },
-      screenProps: { jobs: { loading, data } }
+      navigation: { state: { params: { job } } },
+      screenProps: { jobs: { loading } },
     } = this.props;
 
     if (loading || this.state.loading) return <Spinner />;
@@ -93,9 +94,9 @@ export class JobDetails extends Component {
             <Input
               defaultValue={this.state.initialValue}
               placeholder="Twój raport ze zlecenia"
-              multiline={true}
+              multiline
               onChangeText={debounce(this.handleChangeText, 500, {
-                maxWait: 6000
+                maxWait: 6000,
               })}
             />
           </Item>
@@ -105,10 +106,7 @@ export class JobDetails extends Component {
   }
 }
 
-JobDetails.navigationOptions = ({
-  navigation,
-  navigation: { state: { params: { job } } }
-}) => ({
+JobDetails.navigationOptions = ({ navigation, navigation: { state: { params: { job } } } }) => ({
   header: (
     <Header>
       <Left>
@@ -120,5 +118,5 @@ JobDetails.navigationOptions = ({
         <Title>Zlecenie {job.data().number}</Title>
       </Body>
     </Header>
-  )
+  ),
 });

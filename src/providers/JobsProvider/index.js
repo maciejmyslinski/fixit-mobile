@@ -4,22 +4,13 @@ import PropTypes from 'prop-types';
 
 export class JobsProvider extends Component {
   static propTypes = {
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
   };
 
   state = {
     loading: true,
-    error: false
+    error: false,
   };
-
-  handleJobSnapshot = querySnapshot =>
-    this.setState({
-      loading: false,
-      error: false,
-      querySnapshot
-    });
-
-  handleError = () => this.setState({ error: true, loading: false });
 
   componentDidMount() {
     firebase
@@ -40,6 +31,15 @@ export class JobsProvider extends Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
+
+  handleError = () => this.setState({ error: true, loading: false });
+
+  handleJobSnapshot = querySnapshot =>
+    this.setState({
+      loading: false,
+      error: false,
+      querySnapshot,
+    });
 
   render() {
     return this.props.render(this.state);

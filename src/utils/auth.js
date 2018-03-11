@@ -7,10 +7,7 @@ export const login = async () => {
 
   const data = await GoogleSignin.signIn();
 
-  const credential = firebase.auth.GoogleAuthProvider.credential(
-    data.idToken,
-    data.accessToken
-  );
+  const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
 
   firebase.auth().signInWithCredential(credential);
 };

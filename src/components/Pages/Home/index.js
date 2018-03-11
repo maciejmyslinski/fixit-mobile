@@ -10,25 +10,25 @@ import {
   Text,
   Spinner,
   Right,
-  Button
+  Button,
 } from 'native-base';
 import PropTypes from 'prop-types';
 import { logout } from 'src/utils/auth';
 
-export const Home = ({
-  navigation,
-  screenProps: { jobs: { loading, querySnapshot } }
-}) => {
+const styles = StyleSheet.create({
+  logoutButton: {
+    color: 'white',
+  },
+});
+
+export const Home = ({ navigation, screenProps: { jobs: { loading, querySnapshot } } }) => {
   if (loading) return <Spinner />;
   return (
     <Container>
       <Content>
         {querySnapshot &&
           querySnapshot.docs.map(job => (
-            <ListItem
-              key={job.id}
-              onPress={() => navigation.navigate('JobDetails', { job })}
-            >
+            <ListItem key={job.id} onPress={() => navigation.navigate('JobDetails', { job })}>
               <Text>Zlecenie numer {job.data().number}</Text>
             </ListItem>
           ))}
@@ -37,7 +37,7 @@ export const Home = ({
   );
 };
 
-Home.navigationOptions = ({ navigation }) => ({
+Home.navigationOptions = () => ({
   header: (
     <Header>
       <Body>
@@ -49,23 +49,17 @@ Home.navigationOptions = ({ navigation }) => ({
         </Button>
       </Right>
     </Header>
-  )
+  ),
 });
 
 Home.propTypes = {
   navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired
+    navigate: PropTypes.func.isRequired,
   }).isRequired,
   screenProps: PropTypes.shape({
     jobs: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      querySnapshot: PropTypes.object
-    }).isRequired
-  }).isRequired
+      querySnapshot: PropTypes.object,
+    }).isRequired,
+  }).isRequired,
 };
-
-const styles = StyleSheet.create({
-  logoutButton: {
-    color: 'white'
-  }
-});
