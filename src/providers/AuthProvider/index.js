@@ -11,10 +11,10 @@ export class AuthProvider extends Component {
   state = {};
 
   componentDidMount() {
-    this.unsubscribe = firebase
-      .auth()
-      .onAuthStateChanged(currentUser => this.setState({ currentUser }));
-    this.login();
+    this.unsubscribe = firebase.auth().onAuthStateChanged(currentUser => {
+      this.setState({ currentUser });
+      if (!currentUser) this.login();
+    });
   }
 
   componentWillUnmount() {
@@ -22,6 +22,7 @@ export class AuthProvider extends Component {
   }
 
   login = async () => {
+    await GoogleSignin.hasPlayServices({ autoResolve: true });
     await GoogleSignin.configure();
 
     const data = await GoogleSignin.signIn();

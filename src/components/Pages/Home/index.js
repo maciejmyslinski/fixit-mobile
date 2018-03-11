@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import {
   Container,
   Header,
@@ -7,9 +8,13 @@ import {
   Content,
   ListItem,
   Text,
-  Spinner
+  Spinner,
+  Right,
+  Button
 } from 'native-base';
 import PropTypes from 'prop-types';
+import firebase from 'react-native-firebase';
+import { GoogleSignin } from 'react-native-google-signin';
 
 export const Home = ({
   navigation,
@@ -39,6 +44,17 @@ Home.navigationOptions = ({ navigation }) => ({
       <Body>
         <Title>Lista zleceń</Title>
       </Body>
+      <Right>
+        <Button
+          transparent
+          onPress={() => {
+            firebase.auth().signOut();
+            GoogleSignin.signOut();
+          }}
+        >
+          <Text style={styles.logoutButton}>Wyloguj</Text>
+        </Button>
+      </Right>
     </Header>
   )
 });
@@ -54,3 +70,9 @@ Home.propTypes = {
     }).isRequired
   }).isRequired
 };
+
+const styles = StyleSheet.create({
+  logoutButton: {
+    color: 'white'
+  }
+});
