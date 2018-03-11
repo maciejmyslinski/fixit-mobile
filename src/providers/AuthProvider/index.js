@@ -11,28 +11,27 @@ export class AuthProvider extends Component {
   state = {};
 
   componentDidMount() {
+    this.unsubscribe = firebase
+      .auth()
+      .onAuthStateChanged(currentUser => this.setState({ currentUser }));
     this.login();
   }
 
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
   login = async () => {
-    try {
-      await GoogleSignin.configure();
+    await GoogleSignin.configure();
 
-      const data = await GoogleSignin.signIn();
+    const data = await GoogleSignin.signIn();
 
-      const credential = firebase.auth.GoogleAuthProvider.credential(
-        data.idToken,
-        data.accessToken
-      );
+    const credential = firebase.auth.GoogleAuthProvider.credential(
+      data.idToken,
+      data.accessToken
+    );
 
-      const UserCredential = await firebase
-        .auth()
-        .signInWithCredential(credential);
-
-      this.setState({ error: null, UserCredential });
-    } catch (error) {
-      this.setState({ UserCredential: null, error });
-    }
+    firebase.auth().signInWithCredential(credential);
   };
 
   render() {

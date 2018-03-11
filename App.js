@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <AuthProvider
         render={auth => {
-          if (auth.UserCredential)
+          if (auth.currentUser)
             return (
               <JobsProvider
                 render={jobs => <Navigator screenProps={{ jobs, auth }} />}
