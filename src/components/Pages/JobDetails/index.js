@@ -55,7 +55,7 @@ export class JobDetails extends Component {
       .collection('reports')
       .where('creatorUid', '==', currentUserUid)
       .get();
-    return !reportsFromCurrentUser.empty && reportsFromCurrentUser.docs[0];
+    return reportsFromCurrentUser.docs && reportsFromCurrentUser.docs[0];
   };
 
   handleChangeText = async (text) => {
@@ -63,7 +63,7 @@ export class JobDetails extends Component {
     const currentJob = this.props.navigation.state.params.job.ref;
     const currentUserUid = firebase.auth().currentUser.uid;
 
-    if (currentReport) {
+    if (!currentReport) {
       currentJob.collection('reports').add({
         creatorUid: currentUserUid,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
