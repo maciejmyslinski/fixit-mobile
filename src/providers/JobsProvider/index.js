@@ -13,18 +13,11 @@ export class JobsProvider extends Component {
   };
 
   componentDidMount() {
-    firebase
-      .firestore()
-      .collection('jobs')
-      .orderBy('number')
-      .get()
-      .then(this.handleJobSnapshot)
-      .catch(this.handleError);
-
     this.unsubscribe = firebase
       .firestore()
       .collection('jobs')
-      .orderBy('number')
+      .where(`assignees.${firebase.auth().currentUser.uid}`, '>', 0)
+      .orderBy(`assignees.${firebase.auth().currentUser.uid}`)
       .onSnapshot(this.handleJobSnapshot, this.handleError);
   }
 

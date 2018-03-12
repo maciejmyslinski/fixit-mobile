@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import firebase from 'react-native-firebase';
-import { login } from '~/utils/auth';
+import { login } from 'src/utils/auth';
 
 export class AuthProvider extends Component {
   static propTypes = {
